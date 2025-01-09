@@ -18,37 +18,33 @@
             }
         };
 
-        const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
-        fetch(url, options)
+        const API_url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+        fetch(API_url, options)
             .then(res => res.json())
             // 가져와야 할 속성
-            // -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 
-            .then(res => {
-                let movieCard = res['result'];
+            // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 
+            .then(data => {
+                let movieInfo = data['results'];
                 let temp_html = "";
 
-                movieCard.forEach(item => {
-                    let img = item['backdrop_path'];
+                movieInfo.forEach(item => {
+                    let img = 'https://image.tmdb.org/t/p/w500' + item['backdrop_path'];
                     let title = item['title'];
                     let overview = item['overview'];
-                    let vote = item['vote_average'];
                     let date = item['release_date'];
+                    let vote = item['vote_average'];
                     let id = item['id'];
 
-                    temp_html += `
-                    <div class="movie_card" id="${id}">
-                        <a>
-                            <img src='${img}'>
-                            <div class="info">
-                                <h3>${title}</h3>
-                                <p>${overview}</p>
-                                <p>${vote}</p>
-                            </div>
-                        </a>
+                    temp_html = `
+                    <div id="${id}" class="card">
+                        <img class="card-img-top" src="${img}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">평점: ${vote}</p>
+                        </div>
                     </div>
                     `;
-                    document.getElementById('movie_list').innerHTML = temp_html;
-                    console.log(movieCard);
+                    $('#card').append(temp_html);
                 });
             })
             // 에러 발생 시 에러 메시지 콘솔 출력
@@ -61,9 +57,14 @@
 <body>
     <div class="mytitle">
         <h1>영화 검색</h1>
+        <p><input type="text"></p>
         <button>북마크 보기</button>
     </div>
-    <div id="moviesContainer"></div>
+
+    <div class="movieCards">
+        <div id="card" class="card">   
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 

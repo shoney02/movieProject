@@ -1,10 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+    font-family: "Oswald", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+}
+
+/* 타이틀(영화 검색) */
 .mytitle {
     background-color: gray;
     color: white;
 
     height: 250px;
 
-    /* 내용물을 정렬 */
+    /* 내용물 정렬 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,6 +24,7 @@
     background-size: cover;
 }
 
+/* 타이틀 버튼(북마크 보기) */
 .mytitle>button {
     width: 150px;
     height: 50px;
@@ -26,4 +37,12 @@
 
     border: 1px solid white;
     margin-top: 20px;
+}
+
+/* 영화 카드 */
+.movieCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
