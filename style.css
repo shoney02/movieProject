@@ -7,31 +7,41 @@
     font-style: normal;
 }
 
-/* 타이틀(영화 검색) */
+/* 타이틀 */
 .mytitle {
-    background-color: gray;
-    color: white;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-    height: 250px;
+/* 타이틀(영화 검색) */
+.mytitle h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
 
-    /* 내용물 정렬 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    background-position: center;
-    background-size: cover;
+/* 검색창 */
+.searchBar {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
 }
 
 /* 타이틀 버튼(북마크 보기) */
 .mytitle>button {
-    width: 150px;
-    height: 50px;
+    width: 100px;
+    height: 30px;
     background-color: transparent;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     border-radius: 5px;
 
@@ -39,10 +49,23 @@
     margin-top: 20px;
 }
 
-/* 영화 카드 */
+/* 영화 카드 모음 */
 .movieCards {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 영화 카드 */
+.card {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-    padding: 20px;
+}
+
+/* 영화 카드 이미지 */
+.card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }

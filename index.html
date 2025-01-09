@@ -22,7 +22,7 @@
         fetch(API_url, options)
             .then(res => res.json())
             // 가져와야 할 속성
-            // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 
+            // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 영화 ID
             .then(data => {
                 let movieInfo = data['results'];
                 let temp_html = "";
@@ -55,11 +55,11 @@
 </head>
 
 <body>
-    <div class="mytitle">
+    <header class="mytitle">
         <h1>영화 검색</h1>
-        <p><input type="text"></p>
+        <p><input type="text" placeholder="영화를 검색하세요..." class="searchBar"></p>
         <button>북마크 보기</button>
-    </div>
+    </header>
 
     <div class="movieCards">
         <div id="card" class="card">   
