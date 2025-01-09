@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화 검색 사이트</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZmU3ZjAzNjA5MmVkNjMwOTFlYjNhNzEzYzE0ZDE5MCIsIm5iZiI6MTczNjMxMzgzOS4zNTYsInN1YiI6IjY3N2UwYmVmMjAzN2ZmMDRjOTRlNTlmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pNxV2dUSWqGWsjcftHfvDtCYm65NSyuLRV8zzlPnEH0'
+            }
+        };
+
+        const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+        fetch(url, options)
+            .then(res => res.json())
+            // 가져와야 할 속성
+            // -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 
+            .then(res => {
+                let movieCard = res['result'];
+                let temp_html = "";
+
+                movieCard.forEach(item => {
+                    let img = item['backdrop_path'];
+                    let title = item['title'];
+                    let overview = item['overview'];
+                    let vote = item['vote_average'];
+                    let date = item['release_date'];
+                    let id = item['id'];
+
+                    temp_html += `
+                    <div class="movie_card" id="${id}">
+                        <a>
+                            <img src='${img}'>
+                            <div class="info">
+                                <h3>${title}</h3>
+                                <p>${overview}</p>
+                                <p>${vote}</p>
+                            </div>
+                        </a>
+                    </div>
+                    `;
+                    document.getElementById('movie_list').innerHTML = temp_html;
+                    console.log(movieCard);
+                });
+            })
+            // 에러 발생 시 에러 메시지 콘솔 출력
+            .catch(error => {
+                console.error("영화 데이터를 가져오는데 오류가 발생했습니다.", error);
+            });
+    </script>
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>영화 검색</h1>
+        <button>북마크 보기</button>
+    </div>
+    <div id="moviesContainer"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>

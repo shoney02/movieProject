@@ -1,0 +1,29 @@
+.mytitle {
+    background-color: gray;
+    color: white;
+
+    height: 250px;
+
+    /* 내용물을 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-position: center;
+    background-size: cover;
+}
+
+.mytitle>button {
+    width: 150px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+
+    border: 1px solid white;
+    margin-top: 20px;
+}
