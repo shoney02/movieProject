@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    
     <script>
         const options = {
             method: 'GET',
@@ -19,50 +20,68 @@
         };
 
         const API_url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+        let movieInfo = [];
+
         fetch(API_url, options)
             .then(res => res.json())
             // 가져와야 할 속성
             // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 영화 ID
             .then(data => {
-                let movieInfo = data['results'];
-                let temp_html = "";
-
-                movieInfo.forEach(item => {
-                    let img = 'https://image.tmdb.org/t/p/w500' + item['backdrop_path'];
-                    let title = item['title'];
-                    let overview = item['overview'];
-                    let date = item['release_date'];
-                    let vote = item['vote_average'];
-                    let id = item['id'];
-
-                    temp_html = `
-                    <div id="${id}" class="card">
-                        <img class="card-img-top" src="${img}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">${title}</h5>
-                            <p class="card-text">평점: ${vote}</p>
-                        </div>
-                    </div>
-                    `;
-                    $('#card').append(temp_html);
-                });
+                movieInfo = data['results']; // 영화 데이터 저장 배열
+                renderMovies(movieInfo); // 초기 영화 리스트 렌더링
             })
             // 에러 발생 시 에러 메시지 콘솔 출력
             .catch(error => {
                 console.error("영화 데이터를 가져오는데 오류가 발생했습니다.", error);
             });
+
+        // 영화 리스트 렌더링 함수
+        function renderMovies(movies) {
+            $('#card').empty(); // 기존 영화 카드 초기화
+
+            movies.forEach(item => {
+                let img = 'https://image.tmdb.org/t/p/w500' + item['backdrop_path'];
+                let title = item['title'];
+                let overview = item['overview'];
+                let date = item['release_date'];
+                let vote = item['vote_average'];
+                let id = item['id'];
+
+                let temp_html = `
+                <div id="${id}" class="card">
+                    <img class="card-img-top" src="${img}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">평점: ${vote}</p>
+                    </div>
+                </div>
+                `;
+                $('#card').append(temp_html);
+            });
+        }
+        
+        // 영화 검색 필터 함수
+        function filterMovies(searchKeyword) {
+            const filterdMovies = movieInfo.filter(movie =>
+                movie.title.toLowerCase().include(searchKeyword.toLowerCase())
+            ); // 대소문자 구분 없애기
+            renderMovies(filterdMovies);
+        }
+
+        // Enter 키 입력 이벤트
+
     </script>
 </head>
 
 <body>
-    <header class="mytitle">
+    <div class="mytitle">
         <h1>영화 검색</h1>
         <p><input type="text" placeholder="영화를 검색하세요..." class="searchBar"></p>
         <button>북마크 보기</button>
-    </header>
+    </div>
 
     <div class="movieCards">
-        <div id="card" class="card">   
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
         </div>
     </div>
     <script src="app.js"></script>
