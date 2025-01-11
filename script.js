@@ -1,3 +1,7 @@
+const movieContainer = document.querySelectorAll('#movie-container');
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+
 const options = {
     method: 'GET',
     headers: {
@@ -7,15 +11,15 @@ const options = {
 };
 
 const API_url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
-let movieInfo = [];
+let movieArr = [];
 
 fetch(API_url, options)
     .then(res => res.json())
     // 가져와야 할 속성
     // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 영화 ID
     .then(data => {
-        movieInfo = data['results']; // 영화 데이터 저장 배열
-        renderMovies(movieInfo); // 초기 영화 리스트 렌더링
+        movieArr = data['results']; // 영화 데이터 저장 배열
+        renderMovies(movieArr); // 초기 영화 리스트 렌더링
     })
     // 에러 발생 시 에러 메시지 콘솔 출력
     .catch(error => {
@@ -23,10 +27,10 @@ fetch(API_url, options)
     });
 
 // 영화 리스트 렌더링 함수
-function renderMovies(movies) {
+function renderMovies(movie) {
     $('#card').empty(); // 기존 영화 카드 초기화
 
-    movies.forEach(item => {
+    movie.forEach(item => {
         let img = 'https://image.tmdb.org/t/p/w500' + item['backdrop_path'];
         let title = item['title'];
         let overview = item['overview'];
@@ -47,9 +51,18 @@ function renderMovies(movies) {
     });
 }
 
+searchButton.addEventListener("click", function () {
+    alert("test");
+    const keyWord = searchInput.value;
+    movieArr.filter(function (t) {
+        return t.title.include(keyWord);
+    })
+    renderMovies(keyWord);
+})
+
 // 영화 검색 필터 함수
 function filterMovies(searchKeyword) {
-    const filterdMovies = movieInfo.filter(movie =>
+    const filterdMovies = movieArr.filter(movie =>
         movie.title.toLowerCase().include(searchKeyword.toLowerCase())
     ); // 대소문자 구분 없애기
     renderMovies(filterdMovies);

@@ -9,17 +9,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="app.js"></script>
 </head>
 
 <body>
-    <div class="mytitle">
+    <script type="module" src="script.js"></script>
+    <header class="mytitle">
         <h1>영화 검색</h1>
-        <p><input type="text" placeholder="영화를 검색하세요..." class="searchBar"></p>
+        <p>
+            <input type="text" placeholder="영화를 검색하세요..." id="search-input" class="searchBar">
+            <button id="search-button">검색</button>
+        </p>
         <button>북마크 보기</button>
-    </div>
+    </header>
 
-    <div class="movieCards" id="card">
+    <div class="movie-container" id="card">
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="modal-title">제목</h2>
+            <p id="modal-body">내용</p>
+        </div>
     </div>
 </body>
 
