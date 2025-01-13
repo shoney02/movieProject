@@ -12,25 +12,27 @@
 </head>
 
 <body>
-    <script type="module" src="script.js"></script>
     <header class="mytitle">
         <h1>영화 검색</h1>
         <p>
-            <input type="text" placeholder="영화를 검색하세요..." id="search-input" class="searchBar">
+            <input type="text" placeholder="영화를 검색하세요..." id="search-input">
             <button id="search-button">검색</button>
         </p>
-        <button>북마크 보기</button>
+        <button id="bookmark-button">북마크 보기</button>
     </header>
 
-    <div class="movie-container" id="card">
-    </div>
-    <div id="modal" class="modal">
+    <main id="movie-container">
+    </main>
+
+    <!-- <div id="modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
             <h2 id="modal-title">제목</h2>
             <p id="modal-body">내용</p>
         </div>
-    </div>
+    </div> -->
+
+    <script src="script.js"></script>
 </body>
 
 </html>

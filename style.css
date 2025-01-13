@@ -24,7 +24,7 @@
 }
 
 /* 검색창 */
-.searchBar {
+#search-input {
     width: 80%;
     max-width: 600px;
     padding: 10px;
@@ -33,8 +33,8 @@
     border-radius: 5px;
 }
 
-/* 타이틀 버튼(북마크 보기) */
-.mytitle>button {
+/* 북마크 버튼 */
+#bookmark-button {
     width: 100px;
     height: 30px;
     background-color: transparent;
@@ -45,28 +45,26 @@
 }
 
 /* 영화 카드 컨테이너*/
-.movie-container {
+#movie-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     max-width: 1500px;
     padding: 20px;
     margin: 20px auto;
-
-
-    /* border-radius: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1); */
 }
 
 /* 영화 카드 */
-.card {
+.movie-card {
+    background: white;
     border-radius: 10px;
+    overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    text-align: center;
+    transition: transform 0.2s ease;
 }
 
-.card:hover {
+.movie-card:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
@@ -76,12 +74,10 @@
     width: 100%;
     height: 300px;
     object-fit: cover;
-    /* border-top-left-radius: 10px;
-    border-top-right-radius: 10px; */
 }
 
 /* 모달창 */
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     top: 0;
@@ -90,10 +86,10 @@
     height: 100%;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.2);
-}
+} */
 
 /* 모달 내 내용 */
-.modal-content {
+/* .modal-content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -101,4 +97,4 @@
     padding: 20px;
     background: #ffffff;
     border-radius: 20px;
-}
+} */

@@ -1,6 +1,7 @@
-const movieContainer = document.querySelectorAll('#movie-container');
+const movieContainer = document.getElementById('movie-container');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
+const bookmarkButton = document.getElementById('bookmark-button');
 
 const options = {
     method: 'GET',
@@ -10,78 +11,48 @@ const options = {
     }
 };
 
-const API_url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
-let movieArr = [];
+const API_KEY = 'efe7f036092ed63091eb3a713c14d190';
+const API_URL = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=${API_KEY}`;
 
-fetch(API_url, options)
-    .then(res => res.json())
-    // 가져와야 할 속성
-    // results -> 영화 이미지: backdrop_path, 영화 제목: title, 영화 설명: overview, 개봉일: release_date, 평점: vote_average, 영화 ID
-    .then(data => {
-        movieArr = data['results']; // 영화 데이터 저장 배열
-        renderMovies(movieArr); // 초기 영화 리스트 렌더링
-    })
-    // 에러 발생 시 에러 메시지 콘솔 출력
-    .catch(error => {
-        console.error("영화 데이터를 가져오는데 오류 발생 ", error);
-    });
+// TMDB API 영화 데이터 가져오기
+async function fetchMovies() {
+    try {
+        const response = await fetch(API_URL, options);
+        const data = await response.json();
+        displayMovies(data.results);
+    } catch (err) {
+        console.error("영화 데이터를 가져오는데 오류 발생: ", err);
+    }
+}
 
-// 영화 리스트 렌더링 함수
-function renderMovies(movie) {
-    $('#card').empty(); // 기존 영화 카드 초기화
-
-    movie.forEach(item => {
-        let img = 'https://image.tmdb.org/t/p/w500' + item['backdrop_path'];
-        let title = item['title'];
-        let overview = item['overview'];
-        let date = item['release_date'];
-        let vote = item['vote_average'];
-        let id = item['id'];
-
-        let temp_html = `
+// 영화 데이터 화면 출력
+function displayMovies(movies){
+    movieContainer.innerHTML = ''; // 기존 영화 리스트 초기화
+    movies.forEach(movie => {
+        const movieCard = document.createElement('div'); // 새로운 div 생성
+        movieCard.classList.add('movie-card'); // movie-card 클래스 추가
+        movieCard.innerHTML = `
         <div id="${id}" class="card">
-            <img class="card-img-top" src="${img}" alt="Card image cap">
+            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500${movie.backdrop_path}" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-                <p class="card-text">평점: ${vote}</p>
+                <h5 class="card-title">${movie.title}</h5>
+                <p class="card-text">평점: ${movie.vote_average}</p>
             </div>
         </div>`;
-
-        $('#card').append(temp_html);
-    });
-}
-
-searchButton.addEventListener("click", function () {
-    alert("test");
-    const keyWord = searchInput.value;
-    movieArr.filter(function (t) {
-        return t.title.include(keyWord);
+        movieContainer.appendChild(movieCard);
     })
-    renderMovies(keyWord);
-})
-
-// 영화 검색 필터 함수
-function filterMovies(searchKeyword) {
-    const filterdMovies = movieArr.filter(movie =>
-        movie.title.toLowerCase().include(searchKeyword.toLowerCase())
-    ); // 대소문자 구분 없애기
-    renderMovies(filterdMovies);
 }
 
-$(document).ready(function () {
-    const searchBar = $('.searchBar');
+// 검색창 입력 이벤트 리스너
+searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const movieCards = document.querySelectorAll('.movie-card');
 
-    // 실시간 검색 이벤트
-    searchBar.on('input', function () {
-        const searchKeyword = $(this).val(); // 검색창 입력값
-        filterMovies(searchKeyword); // 입력값에 따라 필터링
-    });
-
-    // Enter 키 검색 이벤트
-    searchBar.on('keyup', function (e) {
-        if (e.key === 'Enter') {
-            const searchKeyword = $(this).val(); // 검색창 입력값
-            filterMovies(searchKeyword); // 입력값에 따라 필터링
-        }
+    movieCards.forEach(card => {
+        const title = card.querySelector('h5').textContent.toLowerCase();
+        card.style.display = title.includes(searchTerm) ? 'block' : 'none';
     });
 })
+
+// 초기 데이터 가져오기
+fetchMovies();
