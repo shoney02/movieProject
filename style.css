@@ -88,10 +88,54 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    /* text-align: center; */
     position: relative;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* 모달 이미지 */
+#modal-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* 제목 스타일 */
+#modal-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* 본문 스타일 */
+#modal-body {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* 날짜와 평점 스타일 */
+#modal-date,
+#modal-vote {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* 북마크 버튼 */
+#modal-bookmark {
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#modal-bookmark:hover {
+    background-color: gray;
 }
 
 /* 모달창 닫기 버튼 */

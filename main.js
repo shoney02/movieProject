@@ -1,4 +1,4 @@
-import { fetchMovies, fetchMovieDetails } from './api.js';
+import { fetchMovies, fetchMovieDetails, searchMovies } from './api.js';
 import { displayMovies, openModal, closeModal } from './ui.js';
 import { getBookmarks } from './bookmark.js';
 
@@ -22,19 +22,17 @@ async function handleMovieClick(movieId) {
     }
 }
 
-// 검색 함수
-function filterMovies(searchTerm, container) {
-    const movieCards = container.querySelectorAll('.movie-card');
-    movieCards.forEach(card => {
-        const title = card.querySelector('h5').textContent.toLowerCase();
-        card.style.display = title.includes(searchTerm) ? 'block' : 'none';
-    });
-}
-
 // 검색창 이벤트
-searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    filterMovies(searchTerm, movieContainer);
+searchInput.addEventListener('input', async () => {
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm) {
+        // TMDB 검색 API를 호출하여 영화 데이터 가져오기
+        const movies = await searchMovies(searchTerm);
+        displayMovies(movies, movieContainer, handleMovieClick);
+    } else {
+        // 검색어가 없을 때 초기 영화 데이터를 다시 로드
+        initialize();
+    }
 });
 
 // 북마크 보기 버튼 클릭 이벤트
