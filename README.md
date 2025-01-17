@@ -39,5 +39,4 @@ project-directory/
 │── api.js          # TMDB API 관련 함수 관리
 │── ui.js           # UI 관련 함수 관리 (모달, 영화 리스트 표시 등)
 │── bookmark.js     # 북마크 기능 관련 로직 관리
-│── assets/         # 이미지, 아이콘 등 정적 파일
 ```
